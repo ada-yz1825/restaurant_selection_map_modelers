@@ -34,10 +34,9 @@
     .shell {
       display: grid;
       grid-template-columns: minmax(0, 1.3fr) minmax(440px, 0.75fr);
+      align-items: start;
       gap: 12px;
-      height: 100vh;
       padding: 10px;
-      overflow: hidden;
     }
 
     .map-panel,
@@ -64,12 +63,12 @@
       min-height: 0;
     }
 
-    .rank-selector {
-      display: flex;
-      grid-column: 1;
-      grid-row: 2;
-      flex-direction: column;
-      align-items: stretch;
+  .rank-selector {
+    display: flex;
+    grid-column: 1;
+    grid-row: 2;
+    flex-direction: column;
+    align-items: center;
       gap: 7px;
       padding: 10px 10px;
       border-right: 1px solid var(--line);
@@ -133,9 +132,10 @@
       outline: none;
     }
 
-    .rank-selector-label {
-      flex: 0 0 auto;
-      color: var(--muted);
+  .rank-selector-label {
+    flex: 0 0 auto;
+    width: 100%;
+    color: var(--muted);
       font-size: 12px;
       font-weight: 700;
       white-space: normal;
@@ -143,10 +143,10 @@
       line-height: 1.2;
     }
 
-    .rank-button {
-      flex: 0 0 auto;
-      height: 28px;
-      width: 100%;
+  .rank-button {
+    flex: 0 0 auto;
+    height: 26px;
+    width: 55px;
       min-width: 0;
       border: 1px solid var(--line);
       border-radius: 8px;
@@ -196,7 +196,7 @@
       flex-direction: column;
       align-items: flex-start;
       gap: 10px;
-      padding: 12px 16px 16px;
+      padding: 12px 16px 10px;
       border-top: 1px solid var(--line);
       background: #fbfcff;
       z-index: 2;
@@ -279,6 +279,15 @@
       letter-spacing: 0;
     }
 
+    .team-name {
+      flex: 0 0 auto;
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
     .subtitle {
       margin-top: 4px;
       color: var(--muted);
@@ -330,7 +339,7 @@
     .detail-panel {
       display: flex;
       flex-direction: column;
-      padding: 14px;
+      padding: 14px 14px 10px;
       gap: 10px;
     }
 
@@ -678,6 +687,7 @@
           <h1>Mexican Restaurant City Selection</h1>
           <div class="subtitle">Choose a strategy, update the map, then compare each city's demand, competition, growth, quality, and overall fit.</div>
         </div>
+        <div class="team-name">By modelers</div>
       </div>
       <div class="map-body" id="mapBody">
         <div class="strategy-bar" aria-label="Strategy selector">
@@ -685,9 +695,9 @@
           <button class="strategy-toggle active" type="button" data-strategy="lowCompetition">low-competition</button>
           <button class="strategy-toggle" type="button" data-strategy="balancedMarkets">balanced markets</button>
         </div>
-        <div class="rank-selector" id="rankSelector" aria-label="Select city by rank">
-          <span class="rank-selector-label">Jump to rank</span>
-        </div>
+    <div class="rank-selector" id="rankSelector" aria-label="Select city by rank">
+      <span class="rank-selector-label">Jump to rank</span>
+    </div>
         <div id="map"></div>
         <div class="legend map-legend" aria-label="Confidence legend">
           <span><i class="dot" style="background:#1f9d63"></i>High</span>
@@ -757,7 +767,7 @@
 
       <div id="radar"></div>
       <div class="footnote" id="strategyFootnote">
-        Radar values are normalized MCDA1 dimension scores. Competition is scored so higher means a more attractive competitive position under the low-competition strategy.
+        Radar scores are normalized from 0 to 1. Higher values indicate a stronger fit for the selected strategy.
       </div>
     </aside>
   </main>
@@ -812,8 +822,8 @@
     };
 
     const strategyFootnotes = {
-      lowCompetition: "Radar values are normalized MCDA1 dimension scores. Low Competition is scored so higher means a more attractive competitive position under the low-competition strategy.",
-      balancedMarkets: "Radar values are normalized MCDA2 dimension scores. Balanced Competition rewards markets with validation but avoids over-saturated or under-proven conditions."
+      lowCompetition: "Radar scores are normalized from 0 to 1. Higher values indicate a stronger fit for the low-competition strategy.",
+      balancedMarkets: "Radar scores are normalized from 0 to 1. Higher values indicate a stronger fit for the balanced-market strategy."
     };
 
     let pendingStrategy = currentStrategy;
