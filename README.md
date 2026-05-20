@@ -5,12 +5,11 @@ This is a web page used for visualization in a BDA group assignment. The reposit
 ## Demo
 
 <!-- If deployed, add a link here. Example: -->
-[View the live website](https://your-github-username.github.io/restaurant_selection_map_modelers/)
+[View the live website](https://ada-yz1825.github.io/restaurant_selection_map_modelers/)
 
 ## Features
 
 - Interactive restaurant selection map visualization
-- (List any other features, such as data filters, charts, etc.)
 
 ## Getting Started
 
@@ -20,20 +19,8 @@ To view the page:
 
 No installation required since the project is pure HTML.
 
-## Project Structure
-
-- `index.html` — Main HTML page
-- (List other important files or folders as appropriate)
-
-## Screenshots
-
-<!-- Add a screenshot: -->
-![Screenshot](screenshot.png)
 
 ## Credits
 
-Created for a BDA group assignment by [your name(s)].
+Created for a BDA group assignment by [modelers].
 
-## License
-
-[MIT](LICENSE) or other license if you have one.
