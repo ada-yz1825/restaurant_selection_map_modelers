@@ -536,7 +536,13 @@
     }
 
     .modal-panel.chart-page-modal {
-      width: min(1180px, 96vw);
+      width: min(1240px, 96vw);
+      max-height: 96vh;
+    }
+
+    #competitionSweetSpotChart {
+      width: 100%;
+      height: min(720px, 76vh);
     }
 
     .modal-header {
@@ -755,13 +761,6 @@
       height: min(720px, 78vh);
     }
 
-    .embedded-chart-frame {
-      width: 100%;
-      height: min(720px, 78vh);
-      border: 0;
-      background: #ffffff;
-    }
-
     .footnote {
       color: var(--muted);
       font-size: 12px;
@@ -936,7 +935,7 @@
         height: 76vh;
       }
 
-      .embedded-chart-frame {
+      #competitionSweetSpotChart {
         height: 76vh;
       }
     }
@@ -975,7 +974,7 @@
           <div class="map-action-buttons">
             <button class="opportunity-button" id="openOpportunityGap" type="button"><span class="button-text">Population Opportunity Gap</span></button>
             <button class="opportunity-button" id="openClosureRate" type="button"><span class="button-text">Restaurant Closure Rate per City</span></button>
-            <button class="opportunity-button" id="openCompetitionSweetSpot" type="button"><span class="button-text">Competition Sweet Spot</span></button>
+            <button class="opportunity-button" id="openCompetitionSweetSpot" type="button"><span class="button-text">Operating Models by cities</span></button>
           </div>
         </div>
       </div>
@@ -1050,10 +1049,10 @@
   <div class="modal-backdrop" id="competitionSweetSpotModal" role="dialog" aria-modal="true" aria-labelledby="competitionSweetSpotModalTitle">
     <div class="modal-panel chart-page-modal">
       <div class="modal-header">
-        <div class="modal-title" id="competitionSweetSpotModalTitle">Competition Sweet Spot</div>
+        <div class="modal-title" id="competitionSweetSpotModalTitle">Operating Models by cities</div>
         <button class="modal-close" id="closeCompetitionSweetSpot" type="button" aria-label="Close competition sweet spot chart">×</button>
       </div>
-      <iframe class="embedded-chart-frame" id="competitionSweetSpotFrame" title="Competition Sweet Spot"></iframe>
+      <div id="competitionSweetSpotChart" aria-label="Operating Models by cities chart"></div>
     </div>
   </div>
 
@@ -1219,7 +1218,7 @@
     }
 
     function resizeVisiblePlots() {
-      ["map", "radar", "opportunityGapChart", "closureRateChart", "neighbourhoodMap"].forEach(id => {
+      ["map", "radar", "opportunityGapChart", "closureRateChart", "competitionSweetSpotChart", "neighbourhoodMap"].forEach(id => {
         const el = document.getElementById(id);
         if (el && el.offsetParent !== null) Plotly.Plots.resize(el);
       });
@@ -1233,6 +1232,166 @@
       avgMexicanStars: city.metrics["Mexican Avg Stars"],
       opportunityScore: city.score
     }));
+
+    const competitionSweetSpotFigure = {
+      data: [
+        {
+          type: "bar",
+          name: "Delivery",
+          x: [
+            "Philadelphia, PA",
+            "Tampa, FL",
+            "Indianapolis, IN",
+            "Nashville, TN",
+            "St. Louis, MO",
+            "Tucson, AZ",
+            "New Orleans, LA",
+            "Reno, NV",
+            "Boise, ID",
+            "Santa Barbara, CA",
+            "Clearwater, FL",
+            "Wilmington, DE",
+            "Metairie, LA",
+            "Saint Petersburg, FL",
+            "Franklin, TN"
+          ],
+          y: [0.1579, 0.3115, 0.3182, null, 0.5000, 0.2833, 0.8333, 0.3243, 1.0000, null, 0.1951, 0.2862, 0.3000, 0.2500, 0.3333],
+          customdata: [[68.0, "Delivery"], [52.4, "Delivery"], [51.6, "Delivery"], [47.4, "Delivery"], [47.3, "Delivery"], [47.7, "Delivery"], [42.9, "Delivery"], [39.3, "Delivery"], [52.0, "Delivery"], [31.9, "Delivery"], [54.5, "Delivery"], [56.6, "Delivery"], [57.6, "Delivery"], [56.2, "Delivery"], [59.1, "Delivery"]],
+          hovertext: [
+            "Philadelphia, PA",
+            "Tampa, FL",
+            "Indianapolis, IN",
+            "Nashville, TN",
+            "St. Louis, MO",
+            "Tucson, AZ",
+            "New Orleans, LA",
+            "Reno, NV",
+            "Boise, ID",
+            "Santa Barbara, CA",
+            "Clearwater, FL",
+            "Wilmington, DE",
+            "Metairie, LA",
+            "Saint Petersburg, FL",
+            "Franklin, TN"
+          ],
+          marker: { color: "#d95f02" },
+          hovertemplate: "<b>%{hovertext}</b><br><br>Operating signal=%{customdata[1]}<br>Share of Mexican restaurants=%{y:.1%}<br>share_pct=%{customdata[0]}<extra></extra>"
+        },
+        {
+          type: "bar",
+          name: "Takeout",
+          x: [
+            "Philadelphia, PA",
+            "Tampa, FL",
+            "Indianapolis, IN",
+            "Nashville, TN",
+            "St. Louis, MO",
+            "Tucson, AZ",
+            "New Orleans, LA",
+            "Reno, NV",
+            "Boise, ID",
+            "Santa Barbara, CA",
+            "Clearwater, FL",
+            "Wilmington, DE",
+            "Metairie, LA",
+            "Saint Petersburg, FL",
+            "Franklin, TN"
+          ],
+          y: [0.5000, 0.2833, 0.8333, 0.1951, 0.2862, 0.3000, 0.2500, 0.0870, 0.5385, 0.2857, 0.3333, 0.2647, 0.2500, 0.4444, 0.3000],
+          customdata: [[86.1, "Takeout"], [88.3, "Takeout"], [89.7, "Takeout"], [84.6, "Takeout"], [85.1, "Takeout"], [83.8, "Takeout"], [84.9, "Takeout"], [84.2, "Takeout"], [82.4, "Takeout"], [83.2, "Takeout"], [89.4, "Takeout"], [86.8, "Takeout"], [97.0, "Takeout"], [90.6, "Takeout"], [88.6, "Takeout"]],
+          hovertext: [
+            "Philadelphia, PA",
+            "Tampa, FL",
+            "Indianapolis, IN",
+            "Nashville, TN",
+            "St. Louis, MO",
+            "Tucson, AZ",
+            "New Orleans, LA",
+            "Reno, NV",
+            "Boise, ID",
+            "Santa Barbara, CA",
+            "Clearwater, FL",
+            "Wilmington, DE",
+            "Metairie, LA",
+            "Saint Petersburg, FL",
+            "Franklin, TN"
+          ],
+          marker: { color: "#1f77b4" },
+          hovertemplate: "<b>%{hovertext}</b><br><br>Operating signal=%{customdata[1]}<br>Share of Mexican restaurants=%{y:.1%}<br>share_pct=%{customdata[0]}<extra></extra>"
+        },
+        {
+          type: "bar",
+          name: "Outdoor seating",
+          x: [
+            "Philadelphia, PA",
+            "Tampa, FL",
+            "Indianapolis, IN",
+            "Nashville, TN",
+            "St. Louis, MO",
+            "Tucson, AZ",
+            "New Orleans, LA",
+            "Reno, NV",
+            "Boise, ID",
+            "Santa Barbara, CA",
+            "Clearwater, FL",
+            "Wilmington, DE",
+            "Metairie, LA",
+            "Saint Petersburg, FL",
+            "Franklin, TN"
+          ],
+          y: [0.3890, 0.5020, 0.3130, 0.5040, 0.4880, 0.4870, 0.5870, 0.3720, 0.4510, 0.6390, 0.4550, 0.4150, 0.3940, 0.6250, 0.6140],
+          customdata: [[38.9, "Outdoor seating"], [50.2, "Outdoor seating"], [31.3, "Outdoor seating"], [50.4, "Outdoor seating"], [48.8, "Outdoor seating"], [48.7, "Outdoor seating"], [58.7, "Outdoor seating"], [37.2, "Outdoor seating"], [45.1, "Outdoor seating"], [63.9, "Outdoor seating"], [45.5, "Outdoor seating"], [41.5, "Outdoor seating"], [39.4, "Outdoor seating"], [62.5, "Outdoor seating"], [61.4, "Outdoor seating"]],
+          hovertext: [
+            "Philadelphia, PA",
+            "Tampa, FL",
+            "Indianapolis, IN",
+            "Nashville, TN",
+            "St. Louis, MO",
+            "Tucson, AZ",
+            "New Orleans, LA",
+            "Reno, NV",
+            "Boise, ID",
+            "Santa Barbara, CA",
+            "Clearwater, FL",
+            "Wilmington, DE",
+            "Metairie, LA",
+            "Saint Petersburg, FL",
+            "Franklin, TN"
+          ],
+          marker: { color: "#7570b3" },
+          hovertemplate: "<b>%{hovertext}</b><br><br>Operating signal=%{customdata[1]}<br>Share of Mexican restaurants=%{y:.1%}<br>share_pct=%{customdata[0]}<extra></extra>"
+        }
+      ],
+      layout: {
+        margin: { l: 70, r: 30, t: 90, b: 75 },
+        paper_bgcolor: "white",
+        plot_bgcolor: "white",
+        hovermode: "closest",
+        hoverlabel: { align: "left" },
+        xaxis: {
+          title: { text: "City" },
+          tickangle: 45
+        },
+        yaxis: {
+          title: { text: "Share of Mexican restaurants" },
+          tickformat: ".0%",
+          range: [0, 1]
+        },
+        legend: {
+          title: { text: "Operating signal" },
+          tracegroupgap: 0
+        },
+        title: { text: "Operating Model Signals by City" },
+        barmode: "group",
+        height: 700,
+        bargap: 0.15,
+        bargroupgap: 0.08,
+        font: {
+          family: "Arial, sans-serif",
+          color: "#182033"
+        }
+      }
+    };
 
     function trendLine(points) {
       const n = points.length;
@@ -1269,6 +1428,33 @@
       Plotly.react(
         "closureRateChart",
         restaurantClosureRateFigure.data,
+        layout,
+        { responsive: true, displayModeBar: false }
+      );
+    }
+
+    function renderCompetitionSweetSpotChart() {
+      const layout = {
+        ...competitionSweetSpotFigure.layout,
+        autosize: true,
+        height: Math.min(720, Math.max(500, window.innerHeight * 0.76)),
+        margin: { l: 70, r: 30, t: 90, b: 120 },
+        title: {
+          ...competitionSweetSpotFigure.layout.title,
+          font: { family: "Arial, sans-serif", size: 20, color: "#182033" },
+          x: 0.04,
+          xanchor: "left"
+        },
+        xaxis: {
+          ...competitionSweetSpotFigure.layout.xaxis,
+          tickangle: 60,
+          tickfont: { family: "Arial, sans-serif", size: 11, color: "#182033" },
+          automargin: true
+        }
+      };
+      Plotly.react(
+        "competitionSweetSpotChart",
+        competitionSweetSpotFigure.data,
         layout,
         { responsive: true, displayModeBar: false }
       );
@@ -1751,9 +1937,9 @@
     });
 
     document.getElementById("openCompetitionSweetSpot").addEventListener("click", () => {
-      const frame = document.getElementById("competitionSweetSpotFrame");
-      if (!frame.srcdoc) frame.srcdoc = embeddedCompetitionSweetSpotHtml;
       document.getElementById("competitionSweetSpotModal").classList.add("open");
+      renderCompetitionSweetSpotChart();
+      resizePlot("competitionSweetSpotChart");
     });
 
     document.getElementById("closeCompetitionSweetSpot").addEventListener("click", () => {
