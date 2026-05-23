@@ -22,5 +22,5 @@ No installation required since the project is pure HTML.
 
 ## Credits
 
-Created for a BDA group assignment by [modelers].
+Created for a BDA group assignment by modelers.
 
